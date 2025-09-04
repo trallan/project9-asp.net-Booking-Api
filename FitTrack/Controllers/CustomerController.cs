@@ -5,7 +5,7 @@ namespace GymBookingAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CustomerController : ControllerBase
+public class CustomersController : ControllerBase
 {
     private static List<Customer> customers = new List<Customer>
     {
