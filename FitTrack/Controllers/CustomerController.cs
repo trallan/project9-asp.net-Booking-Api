@@ -4,7 +4,7 @@ using GymBookingAPI.Models;
 namespace GymBookingAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class CustomerController : ControllerBase
 {
     private static List<Customer> customers = new List<Customer>

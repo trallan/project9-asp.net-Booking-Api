@@ -1,29 +1,34 @@
 using Microsoft.AspNetCore.Mvc;
 using GymBookingAPI.Models;
-using GymBookingAPI.Services;
 
 namespace GymBookingAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ClassController : ControllerBase
 {
-    private readonly GymService _service;
-
-    public ClassController(GymService service)
+    private static List<GymClass> classes = new List<GymClass>
     {
-        _service = service;
-    }
+        new GymClass { Id = 1, Title = "Yoga", Description = "Lugn och ro", StartTime = DateTime.Now.AddHours(1) },
+        new GymClass { Id = 2, Title = "HIIT", Description = "Högintensiv träning", StartTime = DateTime.Now.AddHours(2) }
+    };
 
     [HttpGet]
-    public IEnumerable<GymClass> GetAll() => _service.Classes;
+    public IEnumerable<GymClass> GetAll() => classes;
 
     [HttpGet("{id}")]
-     public IActionResult Create(GymClass gymClass)
+    public ActionResult<GymClass> GetById(int id)
     {
-        gymClass.Id = _service.Classes.Count + 1;
-        _service.Classes.Add(gymClass);
-        return Ok(gymClass);
+        var gymClass = classes.FirstOrDefault(c => c.Id == id);
+        if (gymClass == null) return NotFound();
+        return gymClass;
     }
-   
+
+    [HttpPost]
+    public IActionResult Create(GymClass gymClass)
+    {
+        gymClass.Id = classes.Count + 1;
+        classes.Add(gymClass);
+        return CreatedAtAction(nameof(GetById), new { id = gymClass.Id }, gymClass);
+    }
 }
