@@ -31,4 +31,27 @@ public class CustomerController : ControllerBase
         customers.Add(customer);
         return CreatedAtAction(nameof(GetById), new { id = customer.Id }, customer);
     }
+
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, Customer updatedCustomer)
+    {
+        var customer = customers.FirstOrDefault(c => c.Id == id);
+        if (customer == null) return NotFound();
+
+        customer.Name = updatedCustomer.Name;
+        customer.Email = updatedCustomer.Email;
+
+        return Ok(customer);
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var customer = customers.FirstOrDefault(c => c.Id == id);
+        if (customer == null) return NotFound();
+
+        customers.Remove(customer);
+
+        return NoContent();
+    }
 }

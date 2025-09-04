@@ -1,6 +1,18 @@
-@FitTrack_HostAddress = http://localhost:5254
+@FitTrack_HostAddress = https://silver-giggle-q6jp764p66g3xp57-5269.app.github.dev
 
-GET {{FitTrack_HostAddress}}/customer/
+GET {{FitTrack_HostAddress}}/api/booking/
 Accept: application/json
 
 ###
+
+PUT {{FitTrack_HostAddress}}/api/booking/1
+Content-Type: application/json
+
+{
+    "ClassId": 2
+}
+
+###
+
+DELETE {{FitTrack_HostAddress}}/api/booking/1
+Content-Type: application/json

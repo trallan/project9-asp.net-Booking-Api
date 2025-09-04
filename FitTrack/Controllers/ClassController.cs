@@ -31,4 +31,28 @@ public class ClassController : ControllerBase
         classes.Add(gymClass);
         return CreatedAtAction(nameof(GetById), new { id = gymClass.Id }, gymClass);
     }
+
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, GymClass updatedClass)
+    {
+        var gymClass = classes.FirstOrDefault(c => c.Id == id);
+        if (gymClass == null) return NotFound();
+
+        gymClass.Title = updatedClass.Title;
+        gymClass.Description = updatedClass.Description;
+        gymClass.StartTime = updatedClass.StartTime;
+
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var gymClass = classes.FirstOrDefault(c => c.Id == id);
+        if (gymClass == null) return NotFound();
+        
+        classes.Remove(gymClass);
+
+        return NoContent();
+    }
 }
